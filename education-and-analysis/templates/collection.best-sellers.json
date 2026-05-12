@@ -98,6 +98,10 @@
         "padding-block-end": 48
       }
     },
+    "call-to-action": {
+      "type": "call-to-action",
+      "settings": {}
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -229,6 +233,7 @@
   },
   "order": [
     "section",
+    "call-to-action",
     "main"
   ]
 }
