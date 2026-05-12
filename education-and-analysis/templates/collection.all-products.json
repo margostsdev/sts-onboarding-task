@@ -69,6 +69,7 @@
         "text_tqQTNE",
         "text_twGGkJ"
       ],
+      "disabled": true,
       "name": "Collection heading",
       "settings": {
         "content_direction": "column",
@@ -96,6 +97,23 @@
         "gradient_direction": "to top",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "call_to_action_RCr8Xr": {
+      "type": "call-to-action",
+      "name": "t:names.call_to_action",
+      "settings": {
+        "pre-order-title": "Pre-order now from \"{{ collection.title }}\" collection!",
+        "pre-order-text": "You need to buy our amazing snowboards!!!!",
+        "section_width": "page-width",
+        "color_scheme": "scheme-3",
+        "background_image_position": "cover",
+        "heading_font_size": 40,
+        "body_font_size": 22,
+        "padding-block-start": 24,
+        "padding-block-end": 50,
+        "padding-inline-start": 0,
+        "padding-inline-end": 0
       }
     },
     "main": {
@@ -212,9 +230,12 @@
         }
       },
       "settings": {
+        "enable_filter_by_tags": true,
         "layout_type": "grid",
         "product_card_size": "medium",
         "mobile_product_card_size": "small",
+        "enable_infinite_scroll": true,
+        "products_per_page": 24,
         "product_grid_width": "centered",
         "full_width_on_mobile": true,
         "columns_gap_horizontal": 16,
@@ -222,13 +243,14 @@
         "padding-inline-start": 0,
         "padding-inline-end": 0,
         "color_scheme": "scheme-1",
-        "padding-block-start": 0,
+        "padding-block-start": 32,
         "padding-block-end": 32
       }
     }
   },
   "order": [
     "section",
+    "call_to_action_RCr8Xr",
     "main"
   ]
 }

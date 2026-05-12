@@ -1,29 +1,212 @@
-<div>
-  <h2>{{ section.settings.pre-order-title }}</h2>
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
 
-  The new {{ collection.title }} is out now! {{ section.settings.pre-order-text }}
+<div
+  class="section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} call-to-action"
+  {% if request.visual_preview_mode %}
+    data-shopify-visual-preview
+  {% endif %}
+>
+  {% if section.settings.background_image != blank %}
+    <div class="custom-section-background">
+      {% render 'background-media',
+        background_media: 'image',
+        background_image: section.settings.background_image,
+        background_image_position: section.settings.background_image_position,
+        section: section
+      %}
+    </div>
+  {% endif %}
+
+  <div
+    class="call-to-action__inner spacing-style section-content-wrapper"
+    style="
+      {% render 'spacing-style', settings: section.settings %}
+      --cta-heading-font-size: {{ section.settings.heading_font_size }}px;
+      --cta-body-font-size: {{ section.settings.body_font_size }}px;
+    "
+  >
+    <h2 class="call-to-action__title">{{ section.settings['pre-order-title'] }}</h2>
+    <div class="call-to-action__body rte">
+      {{ section.settings['pre-order-text'] }}
+    </div>
+  </div>
 </div>
+
+{% stylesheet %}
+  .call-to-action .custom-section-background {
+    grid-column: 1 / -1;
+  }
+
+  .call-to-action .call-to-action__inner {
+    z-index: var(--layer-flat);
+  }
+
+  .call-to-action__title {
+    font-size: var(--cta-heading-font-size);
+    margin-block: 0 var(--font-heading--spacing, 0.75rem);
+    line-height: var(--line-height--heading, var(--line-height));
+  }
+
+  .call-to-action__body {
+    font-size: var(--cta-body-font-size);
+    line-height: var(--line-height--body, var(--line-height));
+    margin: 0;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
-  "name": "Call to action",
+  "name": "t:names.call_to_action",
   "settings": [
+    {
+      "type": "header",
+      "content": "t:settings.content"
+    },
     {
       "id": "pre-order-title",
       "type": "text",
-      "label": "Title",
+      "label": "t:settings.title",
       "default": "Pre-order now!"
     },
     {
       "id": "pre-order-text",
       "type": "textarea",
-      "label": "Text",
+      "label": "t:settings.text",
       "default": "Enter text here"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.section_width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.background_image"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "t:settings.image"
+    },
+    {
+      "type": "select",
+      "id": "background_image_position",
+      "label": "t:settings.image_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "fit",
+          "label": "t:options.fit"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ section.settings.background_image != blank }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_font_size",
+      "label": "t:content.heading_size",
+      "min": 16,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "body_font_size",
+      "label": "t:content.body_size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
     }
   ],
   "presets": [
     {
-      "name": "Call to Action",
-      "category": "Promotional"
+      "name": "t:names.call_to_action",
+      "category": "t:categories.other_sections",
+      "settings": {
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "heading_font_size": 32,
+        "body_font_size": 16,
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
     }
   ]
 }

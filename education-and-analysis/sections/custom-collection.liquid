@@ -32,19 +32,19 @@
   {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
 
   {% comment %} Render tags filter if enabled {% endcomment %}
-  {% if section.settings.enable_filter_by_tags %}
-    {% if collection.all_tags.size > 0 %}
-      <ul class="tag-filters">
-        {% for tag in collection.all_tags %}
-          {% if current_tags contains tag %}
-            <li class="tag-filters__item active">{{ tag | link_to_remove_tag: tag }}</li>
-          {% else %}
-            <li class="tag-filters__item">{{ tag | link_to_add_tag: tag }}</li>
-          {% endif %}
-        {% endfor %}
-      </ul>
+       {% if section.settings.enable_filter_by_tags %}
+      {% if collection.all_tags.size > 0 %}
+        <ul class="tag-filters">
+          {% for tag in collection.all_tags %}
+            {% if current_tags contains tag %}
+              <li class="tag-filters__item active">{{ tag | link_to_remove_tag: tag }}</li>
+            {% else %}
+              <li class="tag-filters__item">{{ tag | link_to_add_tag: tag }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      {% endif %}
     {% endif %}
-  {% endif %}
 
   <div
     class="collection-wrapper grid gap-style{% if section.settings.product_grid_width == 'full-width' %} collection-wrapper--grid-full-width{% endif %}"
