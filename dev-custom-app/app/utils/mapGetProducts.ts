@@ -7,7 +7,6 @@ import type {
   GetProductsProductImage,
   GetProductsProductPriceRange,
 } from "../types/products";
-import { isProductStatus } from "./getProductStatusBadgeTone";
 
 export function mapProductNode(
   node: GetProductsGraphQLNode,
@@ -53,7 +52,7 @@ export function mapProductNode(
     id: node.id,
     title: node.title,
     totalInventory: node.totalInventory,
-    status: isProductStatus(node.status) ? node.status : "DRAFT",
+    status: node.status,
     featuredMedia,
     priceRangeV2,
   };

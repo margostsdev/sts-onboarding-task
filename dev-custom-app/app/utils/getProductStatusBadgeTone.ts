@@ -1,19 +1,10 @@
-/** Shopify Admin GraphQL ProductStatus enum values. */
-export const PRODUCT_STATUSES = [
-  "ACTIVE",
-  "ARCHIVED",
-  "DRAFT",
-  "UNLISTED",
-] as const;
+import {
+  PRODUCT_STATUSES,
+  type ProductStatus,
+  type ProductStatusBadgeTone,
+} from "../constants/product";
 
-export type ProductStatus = (typeof PRODUCT_STATUSES)[number];
-
-/** Tone values used for product status badges (subset of s-badge tones). */
-export type ProductStatusBadgeTone =
-  | "auto"
-  | "caution"
-  | "info"
-  | "success";
+export type {ProductStatus};
 
 export function isProductStatus(value: string): value is ProductStatus {
   return (PRODUCT_STATUSES as readonly string[]).includes(value);
@@ -25,12 +16,10 @@ export function getProductStatusBadgeTone(
   switch (status) {
     case "ACTIVE":
       return "success";
-    case "ARCHIVED":
-      return "auto";
-    case "DRAFT":
-      return "info";
     case "UNLISTED":
       return "caution";
+    case "DRAFT":
+      return "info";
     default:
       return "auto";
   }

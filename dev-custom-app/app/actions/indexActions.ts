@@ -2,81 +2,52 @@ import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
 } from "react-router";
-import {authenticate} from "../shopify.server";
-import {getProducts} from "./queries/getProducts";
+import { authenticate } from "../shopify.server";
+import { isProductStatus } from "../utils/getProductStatusBadgeTone";
+import { updateProductStatus } from "./mutations/updateProductStatus";
+import { getProducts } from "./queries/getProducts";
 
 export const indexLoader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
 
-  const productData = await getProducts({ admin })
+  const productData = await getProducts({ admin });
   return productData;
 };
 
 export const indexAction = async ({ request }: ActionFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
-  const color = ["Red", "Orange", "Yellow", "Green"][
-    Math.floor(Math.random() * 4)
-    ];
-  const response = await admin.graphql(
-    `#graphql
-      mutation populateProduct($product: ProductCreateInput!) {
-        productCreate(product: $product) {
-          product {
-            id
-            title
-            handle
-            status
-            variants(first: 10) {
-              edges {
-                node {
-                  id
-                  price
-                  barcode
-                  createdAt
-                }
-              }
-            }
-          }
-        }
-      }`,
-    {
-      variables: {
-        product: {
-          title: `${color} Snowboard`,
-        },
-      },
-    },
-  );
-  const responseJson = await response.json();
+  const formData = await request.formData();
+  const intent = formData.get("intent");
 
-  const product = responseJson.data!.productCreate!.product!;
-  const variantId = product.variants.edges[0]!.node!.id!;
+  if (intent === "updateProductStatus") {
+    const productId = formData.get("productId");
+    const productStatus = formData.get("productStatus");
 
-  const variantResponse = await admin.graphql(
-    `#graphql
-    mutation shopifyReactRouterTemplateUpdateVariant($productId: ID!, $variants: [ProductVariantsBulkInput!]!) {
-      productVariantsBulkUpdate(productId: $productId, variants: $variants) {
-        productVariants {
-          id
-          price
-          barcode
-          createdAt
-        }
-      }
-    }`,
-    {
-      variables: {
-        productId: product.id,
-        variants: [{ id: variantId, price: "100.00" }],
-      },
-    },
-  );
+    if (typeof productId !== "string" || productId.length === 0) {
+      return { ok: false as const, error: "Missing productId" };
+    }
+    if (typeof productStatus !== "string" || !isProductStatus(productStatus)) {
+      return { ok: false as const, error: "Invalid product status" };
+    }
 
-  const variantResponseJson = await variantResponse.json();
+    const result = await updateProductStatus(admin, {
+      productId,
+      status: productStatus,
+    });
 
-  return {
-    product: responseJson!.data!.productCreate!.product,
-    variant:
-    variantResponseJson!.data!.productVariantsBulkUpdate!.productVariants,
-  };
+    if (!result.ok) {
+      return {
+        ok: false as const,
+        error: result.error,
+        userErrors: result.userErrors,
+      };
+    }
+
+    return {
+      ok: true as const,
+      product: result.product,
+    };
+  }
+
+
 };

@@ -2,8 +2,11 @@ import {
   getProductStatusBadgeTone,
   type ProductStatus,
 } from "../utils/getProductStatusBadgeTone";
+import ProductStatusModal from "./ProductStatusModal";
+import {capitalize} from "../utils/capitalize";
 
 interface TableRowProps {
+  productId: string;
   imageUrl?: string;
   alt?: string | null;
   title: string;
@@ -12,6 +15,7 @@ interface TableRowProps {
   price: string;
 }
 const TableRow = ({
+  productId,
   imageUrl,
   alt,
   title,
@@ -19,6 +23,7 @@ const TableRow = ({
   status,
   price,
 }: TableRowProps) => {
+
   return (
     <s-table-row>
       <s-table-cell>
@@ -46,7 +51,10 @@ const TableRow = ({
         {totalInventory}
       </s-table-cell>
       <s-table-cell>
-        <s-badge tone={getProductStatusBadgeTone(status)}>{status}</s-badge>
+        <s-stack direction={'inline'} alignItems={'center'} gap={'small'}>
+          <s-badge tone={getProductStatusBadgeTone(status)}>{capitalize(status)}</s-badge>
+          <ProductStatusModal productId={productId} status={status} />
+        </s-stack>
       </s-table-cell>
     </s-table-row>
   )

@@ -16,6 +16,7 @@ const Table = ({products, pagination}: TableProps) => {
           products.map((product) => (
             <TableRow
               key={product.id}
+              productId={product.id}
               title={product.title}
               totalInventory={product.totalInventory}
               status={product.status}
