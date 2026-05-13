@@ -3163,6 +3163,15 @@ label:has(input[type='checkbox']:disabled) {
 }
 
 /* Collection tag filters */
+.tag-filters-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-sm);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .tag-filters {
   display: flex;
   flex-wrap: wrap;

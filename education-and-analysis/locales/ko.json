@@ -106,6 +106,7 @@
     "close": "닫기",
     "more": "자세히",
     "reset": "재설정",
+    "reset_tags": "태그 재설정",
     "zoom": "확대/축소",
     "close_dialog": "대화 상자 닫기",
     "enter_using_password": "비밀번호를 사용하여 입장",

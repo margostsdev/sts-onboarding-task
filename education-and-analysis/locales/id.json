@@ -108,6 +108,7 @@
     "zoom": "Perbesar",
     "close_dialog": "Tutup dialog",
     "reset": "Reset",
+    "reset_tags": "Setel ulang tag",
     "remove_discount": "Hapus diskon {{ code }}",
     "enter_using_password": "Masuk dengan sandi",
     "submit": "Kirim",

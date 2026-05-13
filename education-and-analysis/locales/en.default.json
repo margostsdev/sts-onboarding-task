@@ -113,6 +113,8 @@
     "close_dialog": "Close dialog",
     // Button to clear search filter and restore default view
     "reset": "Reset",
+    // Clears all active collection tag filters
+    "reset_tags": "Reset tags",
     "enter_using_password": "Enter using password",
     "sign_up": "Sign up",
     "submit": "Submit",

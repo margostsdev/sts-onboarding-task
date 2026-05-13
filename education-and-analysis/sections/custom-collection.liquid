@@ -32,8 +32,9 @@
   {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
 
   {% comment %} Render tags filter if enabled {% endcomment %}
-       {% if section.settings.enable_filter_by_tags %}
-      {% if collection.all_tags.size > 0 %}
+  {% if section.settings.enable_filter_by_tags %}
+    {% if collection.all_tags.size > 0 %}
+      <div class="tag-filters-bar">
         <ul class="tag-filters">
           {% for tag in collection.all_tags %}
             {% if current_tags contains tag %}
@@ -43,8 +44,17 @@
             {% endif %}
           {% endfor %}
         </ul>
-      {% endif %}
+        {% if current_tags.size > 0 %}
+          <a
+            class="button-unstyled facets__clear-all-link facets__clear-all-link--horizontal facets__clear-all-link--active"
+            href="{{ collection.url }}"
+          >
+            {{- 'actions.reset_tags' | t -}}
+          </a>
+        {% endif %}
+      </div>
     {% endif %}
+  {% endif %}
 
   <div
     class="collection-wrapper grid gap-style{% if section.settings.product_grid_width == 'full-width' %} collection-wrapper--grid-full-width{% endif %}"

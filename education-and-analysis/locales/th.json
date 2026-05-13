@@ -106,6 +106,7 @@
     "close": "ปิด",
     "more": "เพิ่มเติม",
     "reset": "รีเซ็ต",
+    "reset_tags": "รีเซ็ตแท็ก",
     "zoom": "ซูม",
     "close_dialog": "ปิดกล่องโต้ตอบ",
     "remove_discount": "ลบ {{ code }} ส่วนลด",

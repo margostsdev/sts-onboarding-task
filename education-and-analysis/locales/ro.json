@@ -110,6 +110,7 @@
     "zoom": "Zoom",
     "close_dialog": "Închide dialogul",
     "reset": "Resetează",
+    "reset_tags": "Resetează etichetele",
     "remove_discount": "Elimină codul de reducere {{ code }}",
     "enter_using_password": "Accesează folosind parola",
     "submit": "Trimite",
