@@ -1,13 +1,24 @@
+import {
+  getProductStatusBadgeTone,
+  type ProductStatus,
+} from "../utils/getProductStatusBadgeTone";
+
 interface TableRowProps {
-  id: string;
   imageUrl?: string;
   alt?: string | null;
   title: string;
   totalInventory: number;
-  status: string;
+  status: ProductStatus;
   price: string;
 }
-const TableRow = ({ id, imageUrl, alt, title, totalInventory, status, price}: TableRowProps) => {
+const TableRow = ({
+  imageUrl,
+  alt,
+  title,
+  totalInventory,
+  status,
+  price,
+}: TableRowProps) => {
   return (
     <s-table-row>
       <s-table-cell>
@@ -35,7 +46,7 @@ const TableRow = ({ id, imageUrl, alt, title, totalInventory, status, price}: Ta
         {totalInventory}
       </s-table-cell>
       <s-table-cell>
-        <s-badge tone="success">{status}</s-badge>
+        <s-badge tone={getProductStatusBadgeTone(status)}>{status}</s-badge>
       </s-table-cell>
     </s-table-row>
   )

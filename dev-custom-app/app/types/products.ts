@@ -1,5 +1,7 @@
 import type { AdminApiContext } from "@shopify/shopify-app-react-router/server";
 
+import type { ProductStatus } from "../utils/getProductStatusBadgeTone";
+
 /** Money amount from Admin API (decimal string). */
 export type GetProductsMoneyV2 = {
   amount: string;
@@ -25,7 +27,7 @@ export type GetProductsProduct = {
   id: string;
   title: string;
   totalInventory: number;
-  status: string;
+  status: ProductStatus;
   featuredMedia: GetProductsFeaturedMedia | null;
   priceRangeV2: GetProductsProductPriceRange;
 };
@@ -54,7 +56,7 @@ export interface GetProductsGraphQLNode {
   id: string;
   title: string;
   totalInventory: number;
-  status: string;
+  status: ProductStatus;
   featuredMedia?: {
     preview?: {
       image?: { altText?: string | null; url?: string } | null;
