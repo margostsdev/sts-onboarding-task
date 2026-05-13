@@ -2,7 +2,7 @@
 
 client_id = "a1debf156031117bd530b5f7c9a1a977"
 name = "dev-custom-app"
-application_url = "https://6cd245fe9d2433ae8e798ac6792eb61b.loophole.site"
+application_url = "https://775d94ea878e3c90c1652d5a347136df.loophole.site"
 embedded = true
 
 [build]
@@ -17,13 +17,13 @@ api_version = "2026-04"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+scopes = "read_products,write_products"
 optional_scopes = [ ]
 use_legacy_install_flow = false
 
 [auth]
 redirect_urls = [
-  "https://6cd245fe9d2433ae8e798ac6792eb61b.loophole.site/auth/callback",
-  "https://6cd245fe9d2433ae8e798ac6792eb61b.loophole.site/auth/shopify/callback",
-  "https://6cd245fe9d2433ae8e798ac6792eb61b.loophole.site/api/auth/callback"
+  "https://775d94ea878e3c90c1652d5a347136df.loophole.site/auth/callback",
+  "https://775d94ea878e3c90c1652d5a347136df.loophole.site/auth/shopify/callback",
+  "https://775d94ea878e3c90c1652d5a347136df.loophole.site/api/auth/callback"
 ]
