@@ -1,6 +1,7 @@
-import { HeadersFunction, useLoaderData } from "react-router";
+import type { HeadersFunction } from "react-router";
 import { boundary } from "@shopify/shopify-app-react-router/server";
-import {indexAction, indexLoader} from "../actions/indexActions";
+import { useLoaderData } from "react-router";
+import { indexAction, indexLoader } from "../actions/indexActions";
 import Table from "../components/Table";
 
 export const loader = indexLoader;
@@ -12,7 +13,11 @@ export default function Index() {
 
   return (
     <s-page heading="Shopify app template">
-      <Table products={loaderData.products} pagination={loaderData.pageInfo}/>
+      <Table
+        products={loaderData.products}
+        inventoryFilter={loaderData.inventoryFilter}
+        pagination={loaderData.pageInfo}
+      />
     </s-page>
   );
 }

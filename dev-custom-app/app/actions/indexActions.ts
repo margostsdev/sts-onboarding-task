@@ -2,16 +2,26 @@ import type {
   ActionFunctionArgs,
   LoaderFunctionArgs,
 } from "react-router";
+import type { ProductIndexLoaderData } from "../types/products";
 import { authenticate } from "../shopify.server";
 import { isProductStatus } from "../utils/getProductStatusBadgeTone";
+import { parseInventoryTotalFilterFromUrl } from "../utils/parseInventoryTotalFilterFromUrl";
 import { updateProductStatus } from "./mutations/updateProductStatus";
 import { getProducts } from "./queries/getProducts";
 
-export const indexLoader = async ({ request }: LoaderFunctionArgs) => {
+export const indexLoader = async ({
+  request,
+}: LoaderFunctionArgs): Promise<ProductIndexLoaderData> => {
   const { admin } = await authenticate.admin(request);
+  const url = new URL(request.url);
+  const inventoryFilter = parseInventoryTotalFilterFromUrl(url.searchParams);
 
-  const productData = await getProducts({ admin });
-  return productData;
+  const productData = await getProducts({
+    admin,
+    inventoryTotalFilter: inventoryFilter,
+  });
+
+  return { ...productData, inventoryFilter };
 };
 
 export const indexAction = async ({ request }: ActionFunctionArgs) => {

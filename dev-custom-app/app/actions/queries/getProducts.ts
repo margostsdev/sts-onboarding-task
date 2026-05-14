@@ -4,6 +4,7 @@ import type {
   GetProductsProduct,
   GetProductsResult,
 } from "../../types/products";
+import { buildInventoryTotalQuery } from "../../utils/buildInventoryTotalQuery";
 import { mapPageInfo, mapProductNode } from "../../utils/mapGetProducts";
 
 export type {
@@ -18,8 +19,8 @@ export type {
 
 const GET_PRODUCTS = `
   #graphql
-  query GetProducts($first: Int!, $after: String) {
-    products(first: $first, after: $after) {
+  query GetProducts($first: Int!, $after: String, $query: String) {
+    products(first: $first, after: $after, query: $query) {
       edges {
         node {
           id
@@ -56,12 +57,19 @@ export const getProducts = async ({
   admin,
   count = 10,
   after = null,
+  inventoryTotalFilter = null,
 }: GetProductsParams): Promise<GetProductsResult> => {
   try {
+    const searchQuery =
+      inventoryTotalFilter != null
+        ? buildInventoryTotalQuery(inventoryTotalFilter)
+        : null;
+
     const response = await admin.graphql(GET_PRODUCTS, {
       variables: {
         first: count,
         after,
+        query: searchQuery,
       },
     });
 

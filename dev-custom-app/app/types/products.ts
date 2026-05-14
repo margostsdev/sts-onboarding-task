@@ -44,12 +44,28 @@ export type GetProductsResult = {
   pageInfo: GetProductsPageInfo | null;
 };
 
+/** Operator for total inventory filter (maps to inventory_total search syntax). */
+export type InventoryTotalFilterOperator = "gt" | "lt" | "eq";
+
+export type InventoryTotalFilter = {
+  operator: InventoryTotalFilterOperator;
+  value: number;
+};
+
 export interface GetProductsParams {
   admin: AdminApiContext;
   /** Page size */
   count?: number;
+  /** Forward pagination cursor (reserved for a future GraphQL pagination step). */
   after?: string | null;
+  /** When set, Admin `products` receives `query` with `inventory_total` filter. */
+  inventoryTotalFilter?: InventoryTotalFilter | null;
 }
+
+/** Loader payload for the product index route. */
+export type ProductIndexLoaderData = GetProductsResult & {
+  inventoryFilter: InventoryTotalFilter | null;
+};
 
 /** Raw node shape from Admin GraphQL JSON (before mapping). */
 export interface GetProductsGraphQLNode {

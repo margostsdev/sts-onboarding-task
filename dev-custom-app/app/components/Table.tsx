@@ -1,19 +1,27 @@
-import {GetProductsPageInfo, GetProductsProduct} from "../types/products";
+import type {
+  GetProductsPageInfo,
+  GetProductsProduct,
+  InventoryTotalFilter,
+} from "../types/products";
+import ProductFilters from "./ProductFilters";
 import TableHeaderRow from "./TableHeaderRow";
 import TableRow from "./TableRow";
 
-interface TableProps  {
+interface TableProps {
   products: GetProductsProduct[];
+  inventoryFilter: InventoryTotalFilter | null;
   pagination: GetProductsPageInfo | null;
 }
-const Table = ({products, pagination}: TableProps) => {
+
+const Table = ({ products, inventoryFilter, pagination }: TableProps) => {
   return (
     <s-section padding="none">
-    <s-table paginate hasNextPage={pagination?.hasNextPage} hasPreviousPage={pagination?.hasPreviousPage}>
-      <TableHeaderRow />
-      <s-table-body>
-        {
-          products.map((product) => (
+      <s-table paginate hasNextPage={pagination?.hasNextPage} hasPreviousPage={pagination?.hasPreviousPage}>
+        <ProductFilters inventoryFilter={inventoryFilter} />
+
+        <TableHeaderRow />
+        <s-table-body>
+          {products.map((product) => (
             <TableRow
               key={product.id}
               productId={product.id}
@@ -22,13 +30,13 @@ const Table = ({products, pagination}: TableProps) => {
               status={product.status}
               imageUrl={product.featuredMedia?.preview?.image?.url}
               alt={product.featuredMedia?.preview?.image?.altText}
-              price={product.priceRangeV2.minVariantPrice.amount}/>
-          ))
-        }
-      </s-table-body>
-    </s-table>
+              price={product.priceRangeV2.minVariantPrice.amount}
+            />
+          ))}
+        </s-table-body>
+      </s-table>
     </s-section>
-  )
-}
+  );
+};
 
 export default Table;
