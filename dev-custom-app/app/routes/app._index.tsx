@@ -12,7 +12,7 @@ export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
 
   return (
-    <s-page heading="Shopify app template">
+    <s-page heading="Product table custom app">
       <Table
         products={loaderData.products}
         inventoryFilter={loaderData.inventoryFilter}
