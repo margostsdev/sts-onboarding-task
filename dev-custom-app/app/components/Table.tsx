@@ -32,18 +32,26 @@ const Table = ({ products, inventoryFilter, pagination }: TableProps) => {
 
         <TableHeaderRow />
         <s-table-body>
-          {products.map((product) => (
-            <TableRow
-              key={product.id}
-              productId={product.id}
-              title={product.title}
-              totalInventory={product.totalInventory}
-              status={product.status}
-              imageUrl={product.featuredMedia?.preview?.image?.url}
-              alt={product.featuredMedia?.preview?.image?.altText}
-              price={product.priceRangeV2.minVariantPrice.amount}
-            />
-          ))}
+          {products.length === 0 ? (
+            <s-table-row>
+              <s-table-cell>
+                <s-text color="subdued">Products not found</s-text>
+              </s-table-cell>
+            </s-table-row>
+          ) : null}
+          {products.length > 0 &&
+            products.map((product) => (
+              <TableRow
+                key={product.id}
+                productId={product.id}
+                title={product.title}
+                totalInventory={product.totalInventory}
+                status={product.status}
+                imageUrl={product.featuredMedia?.preview?.image?.url}
+                alt={product.featuredMedia?.preview?.image?.altText}
+                price={product.priceRangeV2.minVariantPrice.amount}
+              />
+            ))}
         </s-table-body>
       </s-table>
     </s-section>
