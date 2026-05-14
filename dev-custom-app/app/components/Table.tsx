@@ -3,6 +3,7 @@ import type {
   GetProductsProduct,
   InventoryTotalFilter,
 } from "../types/products";
+import { useProductIndexPagination } from "../hooks/useProductIndexPagination";
 import ProductFilters from "./ProductFilters";
 import TableHeaderRow from "./TableHeaderRow";
 import TableRow from "./TableRow";
@@ -14,9 +15,19 @@ interface TableProps {
 }
 
 const Table = ({ products, inventoryFilter, pagination }: TableProps) => {
+  const { onNextPage, onPreviousPage, isPaginationLoading } =
+    useProductIndexPagination(inventoryFilter, pagination);
+
   return (
     <s-section padding="none">
-      <s-table paginate hasNextPage={pagination?.hasNextPage} hasPreviousPage={pagination?.hasPreviousPage}>
+      <s-table
+        paginate
+        hasNextPage={pagination?.hasNextPage}
+        hasPreviousPage={pagination?.hasPreviousPage}
+        loading={isPaginationLoading}
+        onNextPage={onNextPage}
+        onPreviousPage={onPreviousPage}
+      >
         <ProductFilters inventoryFilter={inventoryFilter} />
 
         <TableHeaderRow />

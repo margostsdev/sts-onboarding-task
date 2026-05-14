@@ -16,9 +16,23 @@ export const indexLoader = async ({
   const url = new URL(request.url);
   const inventoryFilter = parseInventoryTotalFilterFromUrl(url.searchParams);
 
+  const rawAfter = url.searchParams.get("after")?.trim() ?? "";
+  const rawBefore = url.searchParams.get("before")?.trim() ?? "";
+  let after: string | null = null;
+  let before: string | null = null;
+  if (rawAfter.length > 0 && rawBefore.length > 0) {
+    after = rawAfter;
+  } else if (rawBefore.length > 0) {
+    before = rawBefore;
+  } else if (rawAfter.length > 0) {
+    after = rawAfter;
+  }
+
   const productData = await getProducts({
     admin,
     inventoryTotalFilter: inventoryFilter,
+    after,
+    before,
   });
 
   return { ...productData, inventoryFilter };

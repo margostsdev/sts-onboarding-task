@@ -19,8 +19,20 @@ export type {
 
 const GET_PRODUCTS = `
   #graphql
-  query GetProducts($first: Int!, $after: String, $query: String) {
-    products(first: $first, after: $after, query: $query) {
+  query GetProducts(
+    $first: Int
+    $last: Int
+    $after: String
+    $before: String
+    $query: String
+  ) {
+    products(
+      first: $first
+      last: $last
+      after: $after
+      before: $before
+      query: $query
+    ) {
       edges {
         node {
           id
@@ -57,6 +69,7 @@ export const getProducts = async ({
   admin,
   count = 10,
   after = null,
+  before = null,
   inventoryTotalFilter = null,
 }: GetProductsParams): Promise<GetProductsResult> => {
   try {
@@ -65,12 +78,20 @@ export const getProducts = async ({
         ? buildInventoryTotalQuery(inventoryTotalFilter)
         : null;
 
+    const useBackward =
+      typeof before === "string" && before.length > 0;
+
+    const variables = useBackward
+      ? { last: count, before, query: searchQuery }
+      : {
+          first: count,
+          after:
+            typeof after === "string" && after.length > 0 ? after : null,
+          query: searchQuery,
+        };
+
     const response = await admin.graphql(GET_PRODUCTS, {
-      variables: {
-        first: count,
-        after,
-        query: searchQuery,
-      },
+      variables,
     });
 
     const jsonResponse = (await response.json()) as GetProductsJsonBody;
@@ -107,7 +128,7 @@ export const getProducts = async ({
       }
       const mapped = mapProductNode(node);
       if (!mapped) {
-        continue
+        continue;
       }
       products.push(mapped);
     }

@@ -56,8 +56,10 @@ export interface GetProductsParams {
   admin: AdminApiContext;
   /** Page size */
   count?: number;
-  /** Forward pagination cursor (reserved for a future GraphQL pagination step). */
+  /** Forward pagination: cursor after which to fetch (`endCursor` of the current page). */
   after?: string | null;
+  /** Backward pagination: cursor before which to fetch (`startCursor` of the current page). */
+  before?: string | null;
   /** When set, Admin `products` receives `query` with `inventory_total` filter. */
   inventoryTotalFilter?: InventoryTotalFilter | null;
 }
