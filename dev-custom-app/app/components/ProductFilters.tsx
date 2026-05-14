@@ -1,8 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
 import type { InventoryTotalFilter } from "../types/products";
-import { buildProductIndexSearchParams } from "../utils/buildProductIndexSearchParams";
-import { parseInventoryTotalFilterFromUrl } from "../utils/parseInventoryTotalFilterFromUrl";
+import { useProductInventoryFilters } from "../hooks/useProductInventoryFilters";
 
 const POPOVER_ID = "product-inventory-filters-popover";
 
@@ -30,38 +27,14 @@ interface ProductFiltersProps {
 }
 
 const ProductFilters = ({ inventoryFilter }: ProductFiltersProps) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const [inventoryOp, setInventoryOp] = useState(
-    () => inventoryFilter?.operator ?? "",
-  );
-  const [inventoryValue, setInventoryValue] = useState(
-    () => (inventoryFilter != null ? String(inventoryFilter.value) : ""),
-  );
-
-  useEffect(() => {
-    setInventoryOp(inventoryFilter?.operator ?? "");
-    setInventoryValue(
-      inventoryFilter != null ? String(inventoryFilter.value) : "",
-    );
-  }, [inventoryFilter]);
-
-  const applyFilters = useCallback(() => {
-    const params = new URLSearchParams();
-    if (inventoryOp !== "") {
-      params.set("inventoryOp", inventoryOp);
-      params.set("inventoryValue", inventoryValue);
-    }
-    const parsed = parseInventoryTotalFilterFromUrl(params);
-    const next = buildProductIndexSearchParams(parsed);
-    const qs = next.toString();
-    navigate(qs ? `${location.pathname}?${qs}` : location.pathname);
-  }, [inventoryOp, inventoryValue, location.pathname, navigate]);
-
-  const clearFilters = useCallback(() => {
-    navigate(location.pathname);
-  }, [location.pathname, navigate]);
+  const {
+    inventoryOp,
+    setInventoryOp,
+    inventoryValue,
+    setInventoryValue,
+    applyFilters,
+    clearFilters,
+  } = useProductInventoryFilters(inventoryFilter);
 
   return (
     <s-stack slot="filters" direction="inline" gap="base" alignItems="center" justifyContent="end">
