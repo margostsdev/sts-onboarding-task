@@ -1,0 +1,98 @@
+{
+  "payload": {
+    "export": "cart-transform-run",
+    "target": "cart.transform.run",
+    "input": {
+      "presentmentCurrencyRate": "1.0",
+      "shop": {
+        "bundleConfig": {
+          "componentVariants": {
+            "jsonValue": [
+              "gid://shopify/ProductVariant/101",
+              "gid://shopify/ProductVariant/102"
+            ]
+          },
+          "parentVariant": {
+            "value": "gid://shopify/ProductVariant/789"
+          },
+          "fixedPrice": {
+            "value": "50.0"
+          },
+          "bundleTitle": {
+            "value": "Test Bundle"
+          }
+        }
+      },
+      "cart": {
+        "lines": [
+          {
+            "id": "gid://shopify/CartLine/1",
+            "quantity": 1,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "id": "gid://shopify/ProductVariant/101",
+              "title": "Variant A",
+              "product": {
+                "title": "Product A"
+              }
+            }
+          },
+          {
+            "id": "gid://shopify/CartLine/2",
+            "quantity": 1,
+            "merchandise": {
+              "__typename": "ProductVariant",
+              "id": "gid://shopify/ProductVariant/102",
+              "title": "Variant B",
+              "product": {
+                "title": "Product B"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "output": {
+      "operations": [
+        {
+          "linesMerge": {
+            "attributes": [
+              {
+                "key": "_bundle_components",
+                "value": "[{\"variantId\":\"gid://shopify/ProductVariant/101\",\"productTitle\":\"Product A\",\"variantTitle\":\"Variant A\",\"quantity\":1},{\"variantId\":\"gid://shopify/ProductVariant/102\",\"productTitle\":\"Product B\",\"variantTitle\":\"Variant B\",\"quantity\":1}]"
+              },
+              {
+                "key": "_fixed_price",
+                "value": "50.0"
+              }
+            ],
+            "cartLines": [
+              {
+                "cartLineId": "gid://shopify/CartLine/1",
+                "quantity": 1
+              },
+              {
+                "cartLineId": "gid://shopify/CartLine/2",
+                "quantity": 1
+              }
+            ],
+            "parentVariantId": "gid://shopify/ProductVariant/789",
+            "title": "Test Bundle"
+          }
+        },
+        {
+          "lineUpdate": {
+            "cartLineId": "gid://shopify/CartLine/1",
+            "price": {
+              "adjustment": {
+                "fixedPricePerUnit": {
+                  "amount": 50
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
