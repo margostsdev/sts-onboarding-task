@@ -1,23 +1,5 @@
 query CartTransformRunInput {
   presentmentCurrencyRate
-  shop {
-    bundleConfig: metaobject(
-      handle: { type: "$app:bundle_config", handle: "default-bundle" }
-    ) {
-      componentVariants: field(key: "component_variants") {
-        jsonValue
-      }
-      parentVariant: field(key: "parent_variant") {
-        value
-      }
-      fixedPrice: field(key: "fixed_price") {
-        value
-      }
-      bundleTitle: field(key: "bundle_title") {
-        value
-      }
-    }
-  }
   cart {
     lines {
       id
@@ -29,6 +11,9 @@ query CartTransformRunInput {
           title
           product {
             title
+            bundleRecipe: metafield(namespace: "$app", key: "bundle") {
+              jsonValue
+            }
           }
         }
       }
