@@ -2,7 +2,7 @@
 
 client_id = "a1debf156031117bd530b5f7c9a1a977"
 name = "dev-custom-app"
-application_url = "https://00c3136216b2f91b23760c9d2bc9d3fc.loophole.site"
+application_url = "https://e2199cd0265524a67f0a87f2bff9e780.loophole.site"
 embedded = true
 
 [build]
@@ -23,9 +23,9 @@ use_legacy_install_flow = false
 
 [auth]
 redirect_urls = [
-  "https://00c3136216b2f91b23760c9d2bc9d3fc.loophole.site/auth/callback",
-  "https://00c3136216b2f91b23760c9d2bc9d3fc.loophole.site/auth/shopify/callback",
-  "https://00c3136216b2f91b23760c9d2bc9d3fc.loophole.site/api/auth/callback"
+  "https://e2199cd0265524a67f0a87f2bff9e780.loophole.site/auth/callback",
+  "https://e2199cd0265524a67f0a87f2bff9e780.loophole.site/auth/shopify/callback",
+  "https://e2199cd0265524a67f0a87f2bff9e780.loophole.site/api/auth/callback"
 ]
 
 [product.metafields.app.bundle]

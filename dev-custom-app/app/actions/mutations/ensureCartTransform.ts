@@ -1,6 +1,6 @@
 import type { AdminApiContext } from "@shopify/shopify-app-react-router/server";
 
-import { PRODUCT_BUNDLE_FUNCTION_HANDLE } from "../../constants/cartTransform";
+import { DONATION_CUSTOM_PRICE_FUNCTION_HANDLE } from "../../constants/cartTransform";
 
 const CART_TRANSFORMS = `#graphql
   query CartTransforms {
@@ -97,7 +97,7 @@ export async function ensureCartTransform(
 
   const response = await admin.graphql(CART_TRANSFORM_CREATE, {
     variables: {
-      functionHandle: PRODUCT_BUNDLE_FUNCTION_HANDLE,
+      functionHandle: DONATION_CUSTOM_PRICE_FUNCTION_HANDLE,
     },
   });
 
